@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio — Administrateur Systèmes &amp; Infrastructure</title>
+<title>Portfolio — Mohamed Kadi | Administrateur Systèmes & Infrastructure</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -222,12 +222,6 @@
     border:1px solid var(--line); color:var(--mist);
   }
 
-  .gallery-note{
-    margin-top:28px; padding:16px 18px; border:1px dashed var(--line); border-radius:8px;
-    font-size:13px; color:var(--mist);
-  }
-  .gallery-note strong{color:var(--paper);}
-
   /* ---------- other projects ---------- */
   .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
   @media (max-width:800px){ .grid3{grid-template-columns:1fr;} }
@@ -251,9 +245,64 @@
   .contact-links a:hover{color:var(--signal); border-color:var(--signal);}
   .fine{margin-top:40px; font-size:12px; color:var(--mist); font-family:var(--mono);}
 
-  .placeholder{color:var(--amber);}
+  /* Style pour le zoom d'image (Lightbox) */
+  .lightbox-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
+  }
+
+  .lightbox-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 85vh;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    animation: zoom 0.3s ease-in-out;
+  }
+
+  @keyframes zoom {
+    from {transform: scale(0.8); opacity: 0;}
+    to {transform: scale(1); opacity: 1;}
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .lightbox-close:hover {
+    color: #38bdf8;
+  }
+
+  /* Indication visuelle que les images sont cliquables */
+  .proof-card img {
+    cursor: pointer;
+    transition: transform 0.2s ease, filter 0.2s ease;
+  }
+
+  .proof-card img:hover {
+    transform: scale(1.02);
+    filter: brightness(1.05);
+  }
 </style>
 </head>
+  
 <body>
 
 <div class="statusbar" aria-hidden="true">
@@ -265,7 +314,6 @@
     <span class="stat"><span class="dot pulse"></span>ad-dc01.tunisair.lab :: up</span>
     <span class="stat"><span class="dot warn"></span>GED_Storage :: controller0 degraded</span>
     <span class="stat"><span class="dot pulse"></span>ansible-ctrl :: play_recap ok=13 failed=0</span>
-    <!-- duplicate for seamless scroll -->
     <span class="stat"><span class="dot pulse"></span>nexavm1 :: up</span>
     <span class="stat"><span class="dot pulse"></span>nexavm2 :: up</span>
     <span class="stat"><span class="dot pulse"></span>esxi01 :: up</span>
@@ -293,7 +341,7 @@
     <div class="eyebrow">Administration Systèmes &amp; Infrastructure</div>
     <h1>Je construis et je répare des infrastructures <span class="accent">qui tiennent debout</span>.</h1>
     <p class="lede">
-      <span class="placeholder">Mohamed Kadi</span> — étudiant en administration systèmes &amp; réseaux.
+      Mohamed Kadi — étudiant en administration systèmes &amp; réseaux.
       Je passe autant de temps à <strong>diagnostiquer une panne réelle</strong> qu'à suivre une procédure :
       contrôleur RAID en panne, sous-réseaux qui ne se parlent pas, environnements sans accès internet.
       C'est là que j'apprends le plus.
@@ -332,7 +380,7 @@
     <div class="console">
       <div class="console-bar">
         <div class="traffic"><span class="r"></span><span class="y"></span><span class="g"></span></div>
-        <span><span class="placeholder">votre-nom</span>@tunisair-lab: ~/infrastructure</span>
+        <span>mohamed.kadi@tunisair-lab: ~/infrastructure</span>
       </div>
       <div class="tabs" role="tablist">
         <button class="tab active" data-tab="apercu">apercu.md</button>
@@ -431,95 +479,97 @@
           <div class="line"><span>localhost</span><span class="ok">ok=4</span><span class="ch">changed=0</span><span class="fl">failed=0</span></div>
         </div>
       </div>
-
-      <div class="tabpanel-note" style="padding:0 32px 32px;">
-     <!-- GALERIE DES PREUVES TECHNIQUES ET CAPTURES D'ÉCRAN -->
-<div class="gallery-container" style="margin-top: 25px; display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 20px;">
-
-    <!-- 1. Active Directory / Domaine Tunisair -->
-    <div class="proof-card" style="background: var(--bg-card, #1e293b); padding: 15px; border-radius: 10px; border: 1px solid var(--line, #334155);">
-        <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Services d'Identité : Active Directory (TUNISAIR)</h4>
-        <img src="images/ad-login.png" alt="Connexion Active Directory TUNISAIR Administrator" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line, #334155);">
-        <p style="font-size: 0.85em; color: #94a3b8; margin-top: 8px; margin-bottom: 0;">
-            Authentification centralisée sur le contrôleur de domaine <code>AD-DC01</code> (Domaine <code>TUNISAIR\Administrator</code>).
-        </p>
     </div>
 
-    <!-- 2. Server Manager & Roles Infrastructure -->
-    <div class="proof-card" style="background: var(--bg-card, #1e293b); padding: 15px; border-radius: 10px; border: 1px solid var(--line, #334155);">
-        <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Infrastructure Réseau : Server Manager & AD DS</h4>
-        <img src="images/ad-server-manager.png" alt="Server Manager tunisair.lab" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line, #334155);">
-        <p style="font-size: 0.85em; color: #94a3b8; margin-top: 8px; margin-bottom: 0;">
-            Gestionnaire de serveur AD DS, DNS et DHCP validé pour le domaine d'entreprise <code>tunisair.lab</code>.
-        </p>
-    </div>
+    <!-- GALERIE DES PREUVES TECHNIQUES ET CAPTURES D'ÉCRAN -->
+    <div style="margin-top:40px;">
+      <h3 style="font-family: var(--disp); font-size: 1.4rem; margin-bottom: 15px; color: var(--paper);">Galerie de preuves techniques</h3>
+      <div class="gallery-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
 
-    <!-- 3. Configuration iSCSI ESXi -->
-    <div class="proof-card" style="background: var(--bg-card, #1e293b); padding: 15px; border-radius: 10px; border: 1px solid var(--line, #334155);">
-        <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Stockage & Réseau : Configuration iSCSI VMware ESXi</h4>
-        <img src="images/iscsi-config.png" alt="Configuration Adaptateur iSCSI VMware ESXi" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line, #334155);">
-        <p style="font-size: 0.85em; color: #94a3b8; margin-top: 8px; margin-bottom: 0;">
-            Liaisons de port réseau (VMkernel) et liaisons statiques/dynamiques vers les cibles SAN iSCSI.
-        </p>
-    </div>
+          <!-- 1. Active Directory / Domaine Tunisair -->
+          <div class="proof-card" style="background: var(--panel); padding: 15px; border-radius: 10px; border: 1px solid var(--line);">
+              <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Services d'Identité : Active Directory</h4>
+              <img src="images/ad-login.png" alt="Connexion Active Directory TUNISAIR Administrator" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line);">
+              <p style="font-size: 0.85em; color: var(--mist); margin-top: 8px; margin-bottom: 0;">
+                  Authentification centralisée sur le contrôleur de domaine <code>AD-DC01</code> (Domaine <code>TUNISAIR\Administrator</code>).
+              </p>
+          </div>
 
-    <!-- 4. Baie MDSM / Disques Virtuels -->
-    <div class="proof-card" style="background: var(--bg-card, #1e293b); padding: 15px; border-radius: 10px; border: 1px solid var(--line, #334155);">
-        <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Stockage SAN : Baie Dell PowerVault (MDSM)</h4>
-        <img src="images/mdsm-virtual-disks.png" alt="Volumes SAN MDSM" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line, #334155);">
-        <p style="font-size: 0.85em; color: #94a3b8; margin-top: 8px; margin-bottom: 0;">
-            Organisation RAID 5 et allocation des volumes virtuels dédiés aux clusters ESXi et NexaVM.
-        </p>
-    </div>
+          <!-- 2. Server Manager & Roles Infrastructure -->
+          <div class="proof-card" style="background: var(--panel); padding: 15px; border-radius: 10px; border: 1px solid var(--line);">
+              <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Infrastructure Réseau : Server Manager</h4>
+              <img src="images/ad-server-manager.png" alt="Server Manager tunisair.lab" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line);">
+              <p style="font-size: 0.85em; color: var(--mist); margin-top: 8px; margin-bottom: 0;">
+                  Gestionnaire de serveur AD DS, DNS et DHCP validé pour le domaine d'entreprise <code>tunisair.lab</code>.
+              </p>
+          </div>
 
-    <!-- 5. Cluster vCenter -->
-    <div class="proof-card" style="background: var(--bg-card, #1e293b); padding: 15px; border-radius: 10px; border: 1px solid var(--line, #334155);">
-        <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Virtualisation VMware : Cluster vCenter</h4>
-        <img src="images/vcenter-cluster.png" alt="Cluster vCenter ESXi" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line, #334155);">
-        <p style="font-size: 0.85em; color: #94a3b8; margin-top: 8px; margin-bottom: 0;">
-            Supervision du cluster VMware d'entreprise et des nœuds d'hyperviseurs associés.
-        </p>
-    </div>
+          <!-- 3. Configuration iSCSI ESXi -->
+          <div class="proof-card" style="background: var(--panel); padding: 15px; border-radius: 10px; border: 1px solid var(--line);">
+              <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Stockage SAN : Configuration iSCSI ESXi</h4>
+              <img src="images/iscsi-config.png" alt="Configuration Adaptateur iSCSI VMware ESXi" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line);">
+              <p style="font-size: 0.85em; color: var(--mist); margin-top: 8px; margin-bottom: 0;">
+                  Liaisons de port réseau (VMkernel) et liaisons statiques/dynamiques vers les cibles SAN iSCSI.
+              </p>
+          </div>
 
-    <!-- 6. Cluster NexaVM & Machine d'Orchestration -->
-    <div class="proof-card" style="background: var(--bg-card, #1e293b); padding: 15px; border-radius: 10px; border: 1px solid var(--line, #334155);">
-        <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Cluster NexaVM & Nœud Ansible</h4>
-        <img src="images/nexavm-cluster.png" alt="Cluster NexaVM et Orchestration" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line, #334155);">
-        <p style="font-size: 0.85em; color: #94a3b8; margin-top: 8px; margin-bottom: 0;">
-            Infrastructure de virtualisation secondaire hébergeant les 2 nœuds NexaVM et le serveur d'orchestration.
-        </p>
-    </div>
+          <!-- 4. Baie MDSM / Disques Virtuels -->
+          <div class="proof-card" style="background: var(--panel); padding: 15px; border-radius: 10px; border: 1px solid var(--line);">
+              <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Stockage SAN : Baie Dell PowerVault (MDSM)</h4>
+              <img src="images/mdsm-virtual-disks.png" alt="Volumes SAN MDSM" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line);">
+              <p style="font-size: 0.85em; color: var(--mist); margin-top: 8px; margin-bottom: 0;">
+                  Organisation RAID 5 et allocation des volumes virtuels dédiés aux clusters ESXi et NexaVM.
+              </p>
+          </div>
 
-    <!-- 7. Diagnostic Matériel Recovery Guru -->
-    <div class="proof-card" style="background: var(--bg-card, #1e293b); padding: 15px; border-radius: 10px; border: 1px solid var(--line, #334155);">
-        <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Résolution d'Incident : Recovery Guru</h4>
-        <img src="images/recovery-guru.png" alt="Diagnostic Recovery Guru Dell" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line, #334155);">
-        <p style="font-size: 0.85em; color: #94a3b8; margin-top: 8px; margin-bottom: 0;">
-            Gestion de l'incident matériel initial sur le contrôleur RAID et maintien de la continuité de service.
-        </p>
-    </div>
+          <!-- 5. Cluster vCenter -->
+          <div class="proof-card" style="background: var(--panel); padding: 15px; border-radius: 10px; border: 1px solid var(--line);">
+              <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Virtualisation VMware : Cluster vCenter</h4>
+              <img src="images/vcenter-cluster.png" alt="Cluster vCenter ESXi" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line);">
+              <p style="font-size: 0.85em; color: var(--mist); margin-top: 8px; margin-bottom: 0;">
+                  Supervision du cluster VMware d'entreprise et des nœuds d'hyperviseurs associés.
+              </p>
+          </div>
 
-    <!-- 8. Bilan d'Exécution Ansible -->
-    <div class="proof-card" style="background: var(--bg-card, #1e293b); padding: 15px; border-radius: 10px; border: 1px solid var(--line, #334155);">
-        <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Orchestration : Execution Recap Ansible</h4>
-        <img src="images/ansible-recap.png" alt="Exécution du Playbook Ansible dans le terminal" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line, #334155);">
-        <p style="font-size: 0.85em; color: #94a3b8; margin-top: 8px; margin-bottom: 0;">
-            Exécution du playbook d'orchestration en ligne de commande validée avec zéro erreur (<code>failed=0</code>).
-        </p>
-    </div>
+          <!-- 6. Cluster NexaVM & Machine d'Orchestration -->
+          <div class="proof-card" style="background: var(--panel); padding: 15px; border-radius: 10px; border: 1px solid var(--line);">
+              <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Cluster NexaVM & Nœud Ansible</h4>
+              <img src="images/nexavm-cluster.png" alt="Cluster NexaVM et Orchestration" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line);">
+              <p style="font-size: 0.85em; color: var(--mist); margin-top: 8px; margin-bottom: 0;">
+                  Infrastructure de virtualisation secondaire hébergeant les 2 nœuds NexaVM et le serveur d'orchestration.
+              </p>
+          </div>
 
-    <!-- 9. Validation Applicative & Nom -->
-    <div class="proof-card" style="background: var(--bg-card, #1e293b); padding: 15px; border-radius: 10px; border: 1px solid var(--line, #334155);">
-        <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Certification du Déploiement : Mohamed Kadi</h4>
-        <img src="images/ansible-app-validation.png" alt="Validation Application Web Mohamed Kadi" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line, #334155);">
-        <p style="font-size: 0.85em; color: #94a3b8; margin-top: 8px; margin-bottom: 0;">
-            Page de validation de déploiement Ansible en environnement totalement isolé (hors-ligne).
-        </p>
-    </div>
+          <!-- 7. Diagnostic Matériel Recovery Guru -->
+          <div class="proof-card" style="background: var(--panel); padding: 15px; border-radius: 10px; border: 1px solid var(--line);">
+              <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Résolution d'Incident : Recovery Guru</h4>
+              <img src="images/recovery-guru.png" alt="Diagnostic Recovery Guru Dell" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line);">
+              <p style="font-size: 0.85em; color: var(--mist); margin-top: 8px; margin-bottom: 0;">
+                  Gestion de l'incident matériel initial sur le contrôleur RAID et maintien de la continuité de service.
+              </p>
+          </div>
 
-</div>
+          <!-- 8. Bilan d'Exécution Ansible -->
+          <div class="proof-card" style="background: var(--panel); padding: 15px; border-radius: 10px; border: 1px solid var(--line);">
+              <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Orchestration : Execution Recap Ansible</h4>
+              <img src="images/ansible-recap.png" alt="Exécution du Playbook Ansible dans le terminal" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line);">
+              <p style="font-size: 0.85em; color: var(--mist); margin-top: 8px; margin-bottom: 0;">
+                  Exécution du playbook d'orchestration en ligne de commande validée avec zéro erreur (<code>failed=0</code>).
+              </p>
+          </div>
+
+          <!-- 9. Validation Applicative & Nom -->
+          <div class="proof-card" style="background: var(--panel); padding: 15px; border-radius: 10px; border: 1px solid var(--line);">
+              <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Certification du Déploiement : Mohamed Kadi</h4>
+              <img src="images/ansible-app-validation.png" alt="Validation Application Web Mohamed Kadi" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line);">
+              <p style="font-size: 0.85em; color: var(--mist); margin-top: 8px; margin-bottom: 0;">
+                  Page de validation de déploiement Ansible en environnement totalement isolé (hors-ligne).
+              </p>
+          </div>
+
       </div>
     </div>
+
   </div>
 </section>
 
@@ -553,12 +603,12 @@
         Disponible pour un stage ou une alternance en administration systèmes, virtualisation ou infrastructure.
       </p>
       <div class="contact-links">
-        <a href="mailto:votre.email@example.com">mohamed.kadi@esprit.tn</a>
+        <a href="mailto:mohamed.kadi@esprit.tn">mohamed.kadi@esprit.tn</a>
         <a href="https://linkedin.com/in/votre-profil" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://github.com/votre-profil" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/moohaammed" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
-    <div class="fine">© <span id="year"></span> — <span class="placeholder">Mohamed Kadi</span>. Fait à la main, pas de framework.</div>
+    <div class="fine">© <span id="year"></span> — Mohamed Kadi. Fait à la main, pas de framework.</div>
   </div>
 </footer>
 
@@ -577,5 +627,38 @@
   });
 </script>
 
+<!-- HTML de la fenêtre de zoom (Lightbox) -->
+<div id="imageLightbox" class="lightbox-modal" onclick="closeLightbox()">
+  <span class="lightbox-close">&times;</span>
+  <img class="lightbox-content" id="lightboxImg">
+</div>
+
+<!-- Script d'ouverture au clic sur n'importe quelle image de la galerie -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const images = document.querySelectorAll('.proof-card img');
+    const modal = document.getElementById('imageLightbox');
+    const modalImg = document.getElementById('lightboxImg');
+
+    images.forEach(img => {
+      img.addEventListener('click', (e) => {
+        e.stopPropagation();
+        modal.style.display = 'block';
+        modalImg.src = img.src;
+        modalImg.alt = img.alt;
+      });
+    });
+  });
+
+  function closeLightbox() {
+    document.getElementById('imageLightbox').style.display = 'none';
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeLightbox();
+    }
+  });
+</script>
 </body>
 </html>
