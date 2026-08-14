@@ -433,7 +433,7 @@
       </div>
 
       <div class="tabpanel-note" style="padding:0 32px 32px;">
-       <!-- GALERIE DES PREUVES TECHNIQUES ET CAPTURES D'ÉCRAN -->
+     <!-- GALERIE DES PREUVES TECHNIQUES ET CAPTURES D'ÉCRAN -->
 <div class="gallery-container" style="margin-top: 25px; display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 20px;">
 
     <!-- 1. Active Directory / Domaine Tunisair -->
@@ -454,7 +454,16 @@
         </p>
     </div>
 
-    <!-- 3. Baie MDSM / Disques Virtuels -->
+    <!-- 3. Configuration iSCSI ESXi -->
+    <div class="proof-card" style="background: var(--bg-card, #1e293b); padding: 15px; border-radius: 10px; border: 1px solid var(--line, #334155);">
+        <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Stockage & Réseau : Configuration iSCSI VMware ESXi</h4>
+        <img src="images/iscsi-config.png" alt="Configuration Adaptateur iSCSI VMware ESXi" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line, #334155);">
+        <p style="font-size: 0.85em; color: #94a3b8; margin-top: 8px; margin-bottom: 0;">
+            Liaisons de port réseau (VMkernel) et liaisons statiques/dynamiques vers les cibles SAN iSCSI.
+        </p>
+    </div>
+
+    <!-- 4. Baie MDSM / Disques Virtuels -->
     <div class="proof-card" style="background: var(--bg-card, #1e293b); padding: 15px; border-radius: 10px; border: 1px solid var(--line, #334155);">
         <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Stockage SAN : Baie Dell PowerVault (MDSM)</h4>
         <img src="images/mdsm-virtual-disks.png" alt="Volumes SAN MDSM" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line, #334155);">
@@ -463,7 +472,7 @@
         </p>
     </div>
 
-    <!-- 4. Cluster vCenter -->
+    <!-- 5. Cluster vCenter -->
     <div class="proof-card" style="background: var(--bg-card, #1e293b); padding: 15px; border-radius: 10px; border: 1px solid var(--line, #334155);">
         <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Virtualisation VMware : Cluster vCenter</h4>
         <img src="images/vcenter-cluster.png" alt="Cluster vCenter ESXi" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line, #334155);">
@@ -472,7 +481,7 @@
         </p>
     </div>
 
-    <!-- 5. Cluster NexaVM & Machine d'Orchestration -->
+    <!-- 6. Cluster NexaVM & Machine d'Orchestration -->
     <div class="proof-card" style="background: var(--bg-card, #1e293b); padding: 15px; border-radius: 10px; border: 1px solid var(--line, #334155);">
         <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Cluster NexaVM & Nœud Ansible</h4>
         <img src="images/nexavm-cluster.png" alt="Cluster NexaVM et Orchestration" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line, #334155);">
@@ -481,7 +490,7 @@
         </p>
     </div>
 
-    <!-- 6. Diagnostic Matériel Recovery Guru -->
+    <!-- 7. Diagnostic Matériel Recovery Guru -->
     <div class="proof-card" style="background: var(--bg-card, #1e293b); padding: 15px; border-radius: 10px; border: 1px solid var(--line, #334155);">
         <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Résolution d'Incident : Recovery Guru</h4>
         <img src="images/recovery-guru.png" alt="Diagnostic Recovery Guru Dell" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line, #334155);">
@@ -490,7 +499,7 @@
         </p>
     </div>
 
-    <!-- 7. Bilan d'Exécution Ansible -->
+    <!-- 8. Bilan d'Exécution Ansible -->
     <div class="proof-card" style="background: var(--bg-card, #1e293b); padding: 15px; border-radius: 10px; border: 1px solid var(--line, #334155);">
         <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Orchestration : Execution Recap Ansible</h4>
         <img src="images/ansible-recap.png" alt="Exécution du Playbook Ansible dans le terminal" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line, #334155);">
@@ -499,7 +508,7 @@
         </p>
     </div>
 
-    <!-- 8. Validation Applicative & Nom -->
+    <!-- 9. Validation Applicative & Nom -->
     <div class="proof-card" style="background: var(--bg-card, #1e293b); padding: 15px; border-radius: 10px; border: 1px solid var(--line, #334155);">
         <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Certification du Déploiement : Mohamed Kadi</h4>
         <img src="images/ansible-app-validation.png" alt="Validation Application Web Mohamed Kadi" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line, #334155);">
