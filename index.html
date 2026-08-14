@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Administrateur Systèmes &amp; Infrastructure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0F1420;
+    --panel:#141B2B;
+    --panel-2:#0C111C;
+    --line:#252E44;
+    --paper:#E8ECF3;
+    --mist:#8B96AC;
+    --signal:#4FD1C5;
+    --signal-dim: rgba(79,209,197,0.12);
+    --amber:#F0A857;
+    --ok:#3DDC84;
+    --err:#E5595C;
+    --radius: 10px;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --disp: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:var(--body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--signal); color:var(--ink);}
+  :focus-visible{outline:2px solid var(--signal); outline-offset:3px;}
+
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  /* ---------- status bar ---------- */
+  .statusbar{
+    border-bottom:1px solid var(--line);
+    background:var(--panel-2);
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--mist);
+    overflow:hidden;
+    white-space:nowrap;
+  }
+  .statusbar-inner{
+    display:flex;
+    gap:28px;
+    padding:9px 24px;
+    animation:scrollstatus 32s linear infinite;
+    width:max-content;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .statusbar-inner{animation:none;}
+  }
+  @keyframes scrollstatus{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-50%);}
+  }
+  .stat{display:inline-flex; align-items:center; gap:7px;}
+  .dot{width:7px; height:7px; border-radius:50%; background:var(--ok); flex:none;}
+  .dot.warn{background:var(--amber);}
+  .dot.pulse{animation:pulse 2.2s ease-in-out infinite;}
+  @keyframes pulse{
+    0%,100%{opacity:1;}
+    50%{opacity:.35;}
+  }
+
+  /* ---------- nav ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(15,20,32,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:16px; padding-bottom:16px;
+  }
+  .brand{
+    font-family:var(--mono); font-size:14px; color:var(--signal); letter-spacing:0.02em;
+  }
+  .navlinks{display:flex; gap:28px; font-size:14px; color:var(--mist);}
+  .navlinks a{text-decoration:none; transition:color .15s;}
+  .navlinks a:hover{color:var(--paper);}
+  @media (max-width:640px){ .navlinks{display:none;} }
+
+  /* ---------- hero ---------- */
+  header.hero{padding:88px 0 64px; border-bottom:1px solid var(--line); position:relative;}
+  .eyebrow{
+    font-family:var(--mono); font-size:12.5px; color:var(--signal);
+    text-transform:uppercase; letter-spacing:0.12em; margin-bottom:18px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:"›"; color:var(--mist);}
+  h1{
+    font-family:var(--disp); font-weight:700;
+    font-size:clamp(2.1rem, 5vw, 3.4rem);
+    line-height:1.08; letter-spacing:-0.01em;
+    max-width:14ch;
+  }
+  h1 .accent{color:var(--signal);}
+  .lede{
+    margin-top:22px; max-width:56ch; color:var(--mist); font-size:1.05rem;
+  }
+  .lede strong{color:var(--paper); font-weight:600;}
+  .hero-cta{display:flex; gap:14px; margin-top:32px; flex-wrap:wrap;}
+  .btn{
+    font-family:var(--mono); font-size:13.5px;
+    padding:12px 20px; border-radius:8px;
+    text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+    transition:transform .15s, background .15s, border-color .15s;
+    border:1px solid var(--line);
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--signal); color:var(--ink); border-color:var(--signal); font-weight:600;}
+  .btn-primary:hover{background:#6be0d4;}
+  .btn-ghost{color:var(--paper);}
+  .btn-ghost:hover{border-color:var(--signal); color:var(--signal);}
+
+  /* ---------- section heading ---------- */
+  .section{padding:72px 0; border-bottom:1px solid var(--line);}
+  .sec-head{margin-bottom:40px;}
+  .sec-tag{
+    font-family:var(--mono); font-size:12px; color:var(--mist);
+    text-transform:uppercase; letter-spacing:0.12em; margin-bottom:10px;
+  }
+  .sec-title{font-family:var(--disp); font-size:1.8rem; font-weight:600;}
+
+  /* ---------- skills rack ---------- */
+  .rack{
+    display:grid; grid-template-columns:repeat(6,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); border-radius:var(--radius);
+    overflow:hidden;
+  }
+  @media (max-width:900px){ .rack{grid-template-columns:repeat(3,1fr);} }
+  @media (max-width:520px){ .rack{grid-template-columns:repeat(2,1fr);} }
+  .blade{
+    background:var(--panel); padding:22px 16px; text-align:center;
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    transition:background .15s;
+  }
+  .blade:hover{background:#182036;}
+  .blade .led{width:6px; height:6px; border-radius:50%; background:var(--ok);}
+  .blade .label{font-family:var(--mono); font-size:12.5px; color:var(--paper);}
+  .blade .sub{font-size:10.5px; color:var(--mist); font-family:var(--mono);}
+
+  /* ---------- featured project console ---------- */
+  .console{
+    border:1px solid var(--line); border-radius:12px; overflow:hidden;
+    background:var(--panel);
+  }
+  .console-bar{
+    background:var(--panel-2); padding:12px 18px;
+    display:flex; align-items:center; gap:10px;
+    border-bottom:1px solid var(--line);
+    font-family:var(--mono); font-size:12.5px; color:var(--mist);
+  }
+  .console-bar .traffic{display:flex; gap:6px;}
+  .traffic span{width:9px; height:9px; border-radius:50%; display:block;}
+  .traffic .r{background:#4a3a3a;} .traffic .y{background:#4a4432;} .traffic .g{background:#2f4a3d;}
+
+  .tabs{display:flex; gap:2px; border-bottom:1px solid var(--line); background:var(--panel-2); overflow-x:auto;}
+  .tab{
+    font-family:var(--mono); font-size:12.5px; padding:13px 18px; color:var(--mist);
+    background:transparent; border:none; cursor:pointer; white-space:nowrap;
+    border-bottom:2px solid transparent;
+  }
+  .tab.active{color:var(--signal); border-bottom-color:var(--signal);}
+
+  .tabpanel{display:none; padding:32px;}
+  .tabpanel.active{display:block; animation:fadein .25s ease;}
+  @keyframes fadein{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
+
+  .proj-title{font-family:var(--disp); font-size:1.5rem; font-weight:600; margin-bottom:8px;}
+  .proj-desc{color:var(--mist); max-width:62ch; margin-bottom:26px;}
+
+  .kv-grid{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px;
+    margin-bottom:28px;
+  }
+  .kv{
+    border:1px solid var(--line); border-radius:8px; padding:14px 16px; background:var(--panel-2);
+  }
+  .kv .k{font-family:var(--mono); font-size:10.5px; color:var(--mist); text-transform:uppercase; letter-spacing:.08em; margin-bottom:6px;}
+  .kv .v{font-family:var(--mono); font-size:13.5px; color:var(--paper);}
+
+  .timeline{list-style:none; counter-reset:phase;}
+  .timeline li{
+    counter-increment:phase;
+    position:relative; padding:0 0 26px 42px; border-left:1px solid var(--line); margin-left:6px;
+  }
+  .timeline li:last-child{border-color:transparent; padding-bottom:0;}
+  .timeline li::before{
+    content:counter(phase);
+    position:absolute; left:-13px; top:0;
+    width:26px; height:26px; border-radius:50%;
+    background:var(--panel-2); border:1px solid var(--signal); color:var(--signal);
+    font-family:var(--mono); font-size:11px; display:flex; align-items:center; justify-content:center;
+  }
+  .timeline .t-title{font-weight:600; margin-bottom:5px;}
+  .timeline .t-body{color:var(--mist); font-size:14px; max-width:60ch;}
+
+  .recap{
+    font-family:var(--mono); font-size:12.5px; background:var(--panel-2);
+    border:1px solid var(--line); border-radius:8px; padding:16px 18px; margin-top:22px;
+    overflow-x:auto;
+  }
+  .recap .line{display:flex; gap:16px; white-space:nowrap;}
+  .recap .ok{color:var(--ok);} .recap .ch{color:var(--amber);} .recap .fl{color:var(--err);}
+
+  .badges{display:flex; flex-wrap:wrap; gap:8px; margin-top:24px;}
+  .badge{
+    font-family:var(--mono); font-size:11.5px; padding:6px 12px; border-radius:20px;
+    border:1px solid var(--line); color:var(--mist);
+  }
+
+  .gallery-note{
+    margin-top:28px; padding:16px 18px; border:1px dashed var(--line); border-radius:8px;
+    font-size:13px; color:var(--mist);
+  }
+  .gallery-note strong{color:var(--paper);}
+
+  /* ---------- other projects ---------- */
+  .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  @media (max-width:800px){ .grid3{grid-template-columns:1fr;} }
+  .card{
+    border:1px solid var(--line); border-radius:10px; padding:24px; background:var(--panel);
+    display:flex; flex-direction:column; gap:10px; min-height:170px;
+  }
+  .card .tag{font-family:var(--mono); font-size:11px; color:var(--amber); text-transform:uppercase; letter-spacing:.08em;}
+  .card h3{font-family:var(--disp); font-size:1.1rem; font-weight:600;}
+  .card p{color:var(--mist); font-size:13.5px; flex:1;}
+  .card.add{
+    align-items:center; justify-content:center; border-style:dashed; color:var(--mist);
+    font-family:var(--mono); font-size:13px;
+  }
+
+  /* ---------- footer / contact ---------- */
+  footer{padding:64px 0 40px;}
+  .contact-grid{display:flex; justify-content:space-between; flex-wrap:wrap; gap:32px;}
+  .contact-links{display:flex; gap:22px; flex-wrap:wrap; font-family:var(--mono); font-size:13.5px;}
+  .contact-links a{text-decoration:none; color:var(--paper); border-bottom:1px solid var(--line); padding-bottom:2px; transition:border-color .15s, color .15s;}
+  .contact-links a:hover{color:var(--signal); border-color:var(--signal);}
+  .fine{margin-top:40px; font-size:12px; color:var(--mist); font-family:var(--mono);}
+
+  .placeholder{color:var(--amber);}
+</style>
+</head>
+<body>
+
+<div class="statusbar" aria-hidden="true">
+  <div class="statusbar-inner">
+    <span class="stat"><span class="dot pulse"></span>nexavm1 :: up</span>
+    <span class="stat"><span class="dot pulse"></span>nexavm2 :: up</span>
+    <span class="stat"><span class="dot pulse"></span>esxi01 :: up</span>
+    <span class="stat"><span class="dot pulse"></span>esxi02 :: up</span>
+    <span class="stat"><span class="dot pulse"></span>ad-dc01.tunisair.lab :: up</span>
+    <span class="stat"><span class="dot warn"></span>GED_Storage :: controller0 degraded</span>
+    <span class="stat"><span class="dot pulse"></span>ansible-ctrl :: play_recap ok=13 failed=0</span>
+    <!-- duplicate for seamless scroll -->
+    <span class="stat"><span class="dot pulse"></span>nexavm1 :: up</span>
+    <span class="stat"><span class="dot pulse"></span>nexavm2 :: up</span>
+    <span class="stat"><span class="dot pulse"></span>esxi01 :: up</span>
+    <span class="stat"><span class="dot pulse"></span>esxi02 :: up</span>
+    <span class="stat"><span class="dot pulse"></span>ad-dc01.tunisair.lab :: up</span>
+    <span class="stat"><span class="dot warn"></span>GED_Storage :: controller0 degraded</span>
+    <span class="stat"><span class="dot pulse"></span>ansible-ctrl :: play_recap ok=13 failed=0</span>
+  </div>
+</div>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">~/portfolio</div>
+    <div class="navlinks">
+      <a href="#skills">Compétences</a>
+      <a href="#projet">Projet phare</a>
+      <a href="#autres">Autres projets</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Administration Systèmes &amp; Infrastructure</div>
+    <h1>Je construis et je répare des infrastructures <span class="accent">qui tiennent debout</span>.</h1>
+    <p class="lede">
+      <span class="placeholder">Mohamed Kadi</span> — étudiant en administration systèmes &amp; réseaux.
+      Je passe autant de temps à <strong>diagnostiquer une panne réelle</strong> qu'à suivre une procédure :
+      contrôleur RAID en panne, sous-réseaux qui ne se parlent pas, environnements sans accès internet.
+      C'est là que j'apprends le plus.
+    </p>
+    <div class="hero-cta">
+      <a href="#projet" class="btn btn-primary">Voir le projet Tunisair Lab →</a>
+      <a href="#contact" class="btn btn-ghost">Me contacter</a>
+    </div>
+  </div>
+</header>
+
+<section class="section" id="skills">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag">Stack technique</div>
+      <div class="sec-title">Les modules de la baie</div>
+    </div>
+    <div class="rack">
+      <div class="blade"><span class="led"></span><span class="label">VMware ESXi/vCenter</span><span class="sub">vSphere · HA · VMFS</span></div>
+      <div class="blade"><span class="led"></span><span class="label">CNware / ZStack</span><span class="sub">Cluster KVM</span></div>
+      <div class="blade"><span class="led"></span><span class="label">Stockage SAN iSCSI</span><span class="sub">Dell PowerVault MD32xxi</span></div>
+      <div class="blade"><span class="led"></span><span class="label">Windows Server</span><span class="sub">AD DS · DNS · DHCP</span></div>
+      <div class="blade"><span class="led"></span><span class="label">Ansible</span><span class="sub">Linux · WinRM · REST API</span></div>
+      <div class="blade"><span class="led"></span><span class="label">Linux</span><span class="sub">Rocky · Ubuntu Server</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="projet">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag">Projet phare — formation</div>
+      <div class="sec-title">Infrastructure virtualisée multi-hyperviseur — Domaine tunisair.lab</div>
+    </div>
+
+    <div class="console">
+      <div class="console-bar">
+        <div class="traffic"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+        <span><span class="placeholder">votre-nom</span>@tunisair-lab: ~/infrastructure</span>
+      </div>
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-tab="apercu">apercu.md</button>
+        <button class="tab" data-tab="phases">phases.log</button>
+        <button class="tab" data-tab="incidents">incidents.log</button>
+        <button class="tab" data-tab="ansible">orchestration.yml</button>
+      </div>
+
+      <div class="tabpanel active" data-panel="apercu">
+        <div class="proj-title">Deux hyperviseurs, un seul stockage, un seul annuaire.</div>
+        <p class="proj-desc">
+          Conception et dépannage d'une infrastructure d'entreprise associant VMware vSphere et CNware/ZStack,
+          reliés au même stockage SAN Dell PowerVault en iSCSI, avec un Active Directory centralisé
+          et une couche d'orchestration Ansible capable de piloter du Linux, du Windows et du VMware
+          depuis un seul point de contrôle.
+        </p>
+        <div class="kv-grid">
+          <div class="kv"><div class="k">Hyperviseurs</div><div class="v">2× ESXi + 2× CNware</div></div>
+          <div class="kv"><div class="k">Stockage</div><div class="v">PowerVault MD32xxi · iSCSI</div></div>
+          <div class="kv"><div class="k">Annuaire</div><div class="v">tunisair.lab · AD DS/DNS/DHCP</div></div>
+          <div class="kv"><div class="k">Orchestration</div><div class="v">Ansible · Linux+Windows+VMware</div></div>
+        </div>
+        <div class="badges">
+          <span class="badge">VMware ESXi</span>
+          <span class="badge">vCenter</span>
+          <span class="badge">CNware/ZStack</span>
+          <span class="badge">Dell PowerVault</span>
+          <span class="badge">iSCSI</span>
+          <span class="badge">Active Directory</span>
+          <span class="badge">Ansible</span>
+          <span class="badge">WinRM</span>
+          <span class="badge">API REST</span>
+        </div>
+      </div>
+
+      <div class="tabpanel" data-panel="phases">
+        <div class="proj-title">Déroulement, phase par phase</div>
+        <ol class="timeline">
+          <li>
+            <div class="t-title">Préparation des serveurs physiques</div>
+            <div class="t-body">Formatage, RAID 5 local (PERC H310), installation des hyperviseurs ESXi et CNware/NexaVM.</div>
+          </li>
+          <li>
+            <div class="t-title">Diagnostic de la baie de stockage</div>
+            <div class="t-body">Détection d'un contrôleur RAID retiré/en panne via le Recovery Guru — root cause d'une absence de connexion iSCSI que le simple ping ne révélait pas.</div>
+          </li>
+          <li>
+            <div class="t-title">Reconnexion iSCSI multi-sous-réseaux</div>
+            <div class="t-body">Dual-homing réseau sur chaque hôte pour joindre le contrôleur survivant, puis agrandissement de LUN sous-dimensionnés.</div>
+          </li>
+          <li>
+            <div class="t-title">Stockage partagé &amp; clusters</div>
+            <div class="t-body">Datastore VMFS partagé côté vCenter, stockage Shared Block côté CNware — les deux nœuds de chaque cluster voient le même disque.</div>
+          </li>
+          <li>
+            <div class="t-title">Active Directory</div>
+            <div class="t-body">Déploiement d'un contrôleur de domaine (AD DS, DNS, DHCP) sur le domaine tunisair.lab.</div>
+          </li>
+          <li>
+            <div class="t-title">Connectivité inter-clusters</div>
+            <div class="t-body">Résolution d'un cloisonnement réseau entre les deux clusters (sous-réseaux séparés sur un switch L2 sans routage).</div>
+          </li>
+          <li>
+            <div class="t-title">Orchestration Ansible</div>
+            <div class="t-body">Nœud de contrôle déployé et alimenté hors-ligne, playbooks Linux + Windows (WinRM) + VMware (API REST vCenter).</div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="tabpanel" data-panel="incidents">
+        <div class="proj-title">Incidents réels rencontrés &amp; résolus</div>
+        <p class="proj-desc">La partie la plus formatrice du projet : pas de procédure toute faite, des pannes à comprendre.</p>
+        <div class="kv-grid">
+          <div class="kv"><div class="k">Panne matérielle</div><div class="v">Contrôleur RAID 0 retiré (pièce A04)</div></div>
+          <div class="kv"><div class="k">Réseau</div><div class="v">iSCSI joignable en ping, injoignable en TCP:3260</div></div>
+          <div class="kv"><div class="k">Stockage</div><div class="v">LUN trop petit pour sanlock (0 extents)</div></div>
+          <div class="kv"><div class="k">Réseau</div><div class="v">2 clusters sur 2 sous-réseaux non routés</div></div>
+          <div class="kv"><div class="k">Plateforme</div><div class="v">Hôte oscillant Connecting/Connected</div></div>
+          <div class="kv"><div class="k">Ansible</div><div class="v">Collection incompatible → pivot API REST</div></div>
+        </div>
+      </div>
+
+      <div class="tabpanel" data-panel="ansible">
+        <div class="proj-title">Orchestration multi-plateforme, un seul playbook maître</div>
+        <p class="proj-desc">Un même nœud de contrôle Ansible pilote trois mondes différents :</p>
+        <div class="kv-grid">
+          <div class="kv"><div class="k">Linux</div><div class="v">nexavm1 / nexavm2 — SSH natif</div></div>
+          <div class="kv"><div class="k">Windows</div><div class="v">ad-dc01 — WinRM</div></div>
+          <div class="kv"><div class="k">VMware</div><div class="v">esxi01 / esxi02 — API REST vCenter</div></div>
+        </div>
+        <div class="recap">
+          <div class="line"><span>PLAY RECAP</span></div>
+          <div class="line"><span>nexavm1</span><span class="ok">ok=7</span><span class="ch">changed=2</span><span class="fl">failed=0</span></div>
+          <div class="line"><span>nexavm2</span><span class="ok">ok=7</span><span class="ch">changed=2</span><span class="fl">failed=0</span></div>
+          <div class="line"><span>ad-dc01</span><span class="ok">ok=1</span><span class="ch">changed=0</span><span class="fl">failed=0</span></div>
+          <div class="line"><span>localhost</span><span class="ok">ok=4</span><span class="ch">changed=0</span><span class="fl">failed=0</span></div>
+        </div>
+      </div>
+
+      <div class="tabpanel-note" style="padding:0 32px 32px;">
+       <!-- GALERIE DES PREUVES TECHNIQUES ET CAPTURES D'ÉCRAN -->
+<div class="gallery-container" style="margin-top: 25px; display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 20px;">
+
+    <!-- 1. Active Directory / Domaine Tunisair -->
+    <div class="proof-card" style="background: var(--bg-card, #1e293b); padding: 15px; border-radius: 10px; border: 1px solid var(--line, #334155);">
+        <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Services d'Identité : Active Directory (TUNISAIR)</h4>
+        <img src="images/ad-login.png" alt="Connexion Active Directory TUNISAIR Administrator" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line, #334155);">
+        <p style="font-size: 0.85em; color: #94a3b8; margin-top: 8px; margin-bottom: 0;">
+            Authentification centralisée sur le contrôleur de domaine <code>AD-DC01</code> (Domaine <code>TUNISAIR\Administrator</code>).
+        </p>
+    </div>
+
+    <!-- 2. Server Manager & Roles Infrastructure -->
+    <div class="proof-card" style="background: var(--bg-card, #1e293b); padding: 15px; border-radius: 10px; border: 1px solid var(--line, #334155);">
+        <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Infrastructure Réseau : Server Manager & AD DS</h4>
+        <img src="images/ad-server-manager.png" alt="Server Manager tunisair.lab" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line, #334155);">
+        <p style="font-size: 0.85em; color: #94a3b8; margin-top: 8px; margin-bottom: 0;">
+            Gestionnaire de serveur AD DS, DNS et DHCP validé pour le domaine d'entreprise <code>tunisair.lab</code>.
+        </p>
+    </div>
+
+    <!-- 3. Baie MDSM / Disques Virtuels -->
+    <div class="proof-card" style="background: var(--bg-card, #1e293b); padding: 15px; border-radius: 10px; border: 1px solid var(--line, #334155);">
+        <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Stockage SAN : Baie Dell PowerVault (MDSM)</h4>
+        <img src="images/mdsm-virtual-disks.png" alt="Volumes SAN MDSM" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line, #334155);">
+        <p style="font-size: 0.85em; color: #94a3b8; margin-top: 8px; margin-bottom: 0;">
+            Organisation RAID 5 et allocation des volumes virtuels dédiés aux clusters ESXi et NexaVM.
+        </p>
+    </div>
+
+    <!-- 4. Cluster vCenter -->
+    <div class="proof-card" style="background: var(--bg-card, #1e293b); padding: 15px; border-radius: 10px; border: 1px solid var(--line, #334155);">
+        <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Virtualisation VMware : Cluster vCenter</h4>
+        <img src="images/vcenter-cluster.png" alt="Cluster vCenter ESXi" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line, #334155);">
+        <p style="font-size: 0.85em; color: #94a3b8; margin-top: 8px; margin-bottom: 0;">
+            Supervision du cluster VMware d'entreprise et des nœuds d'hyperviseurs associés.
+        </p>
+    </div>
+
+    <!-- 5. Cluster NexaVM & Machine d'Orchestration -->
+    <div class="proof-card" style="background: var(--bg-card, #1e293b); padding: 15px; border-radius: 10px; border: 1px solid var(--line, #334155);">
+        <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Cluster NexaVM & Nœud Ansible</h4>
+        <img src="images/nexavm-cluster.png" alt="Cluster NexaVM et Orchestration" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line, #334155);">
+        <p style="font-size: 0.85em; color: #94a3b8; margin-top: 8px; margin-bottom: 0;">
+            Infrastructure de virtualisation secondaire hébergeant les 2 nœuds NexaVM et le serveur d'orchestration.
+        </p>
+    </div>
+
+    <!-- 6. Diagnostic Matériel Recovery Guru -->
+    <div class="proof-card" style="background: var(--bg-card, #1e293b); padding: 15px; border-radius: 10px; border: 1px solid var(--line, #334155);">
+        <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Résolution d'Incident : Recovery Guru</h4>
+        <img src="images/recovery-guru.png" alt="Diagnostic Recovery Guru Dell" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line, #334155);">
+        <p style="font-size: 0.85em; color: #94a3b8; margin-top: 8px; margin-bottom: 0;">
+            Gestion de l'incident matériel initial sur le contrôleur RAID et maintien de la continuité de service.
+        </p>
+    </div>
+
+    <!-- 7. Bilan d'Exécution Ansible -->
+    <div class="proof-card" style="background: var(--bg-card, #1e293b); padding: 15px; border-radius: 10px; border: 1px solid var(--line, #334155);">
+        <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Orchestration : Execution Recap Ansible</h4>
+        <img src="images/ansible-recap.png" alt="Exécution du Playbook Ansible dans le terminal" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line, #334155);">
+        <p style="font-size: 0.85em; color: #94a3b8; margin-top: 8px; margin-bottom: 0;">
+            Exécution du playbook d'orchestration en ligne de commande validée avec zéro erreur (<code>failed=0</code>).
+        </p>
+    </div>
+
+    <!-- 8. Validation Applicative & Nom -->
+    <div class="proof-card" style="background: var(--bg-card, #1e293b); padding: 15px; border-radius: 10px; border: 1px solid var(--line, #334155);">
+        <h4 style="color: #38bdf8; margin-top: 0; margin-bottom: 10px;">Certification du Déploiement : Mohamed Kadi</h4>
+        <img src="images/ansible-app-validation.png" alt="Validation Application Web Mohamed Kadi" style="width:100%; height:auto; border-radius:8px; border:1px solid var(--line, #334155);">
+        <p style="font-size: 0.85em; color: #94a3b8; margin-top: 8px; margin-bottom: 0;">
+            Page de validation de déploiement Ansible en environnement totalement isolé (hors-ligne).
+        </p>
+    </div>
+
+</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="autres">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag">Autres travaux</div>
+      <div class="sec-title">En cours de rédaction</div>
+    </div>
+    <div class="grid3">
+      <div class="card">
+        <div class="tag">À compléter</div>
+        <h3 class="placeholder">[Titre du projet 2]</h3>
+        <p>Courte description du projet, technologies utilisées, résultat obtenu.</p>
+      </div>
+      <div class="card">
+        <div class="tag">À compléter</div>
+        <h3 class="placeholder">[Titre du projet 3]</h3>
+        <p>Courte description du projet, technologies utilisées, résultat obtenu.</p>
+      </div>
+      <div class="card add">+ Ajouter un projet</div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="sec-tag">Contact</div>
+    <div class="contact-grid">
+      <p style="max-width:46ch; color:var(--mist);">
+        Disponible pour un stage ou une alternance en administration systèmes, virtualisation ou infrastructure.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:votre.email@example.com">mohamed.kadi@esprit.tn</a>
+        <a href="https://linkedin.com/in/votre-profil" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/votre-profil" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+    <div class="fine">© <span id="year"></span> — <span class="placeholder">Mohamed Kadi</span>. Fait à la main, pas de framework.</div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const tabs = document.querySelectorAll('.tab');
+  const panels = document.querySelectorAll('.tabpanel');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelector(`.tabpanel[data-panel="${tab.dataset.tab}"]`).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
